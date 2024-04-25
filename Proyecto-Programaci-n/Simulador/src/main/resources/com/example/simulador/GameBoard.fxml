@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.simulador.GameBoardController">
+
+    <!-- Contenedor del tablero de juego -->
+    <center>
+        <GridPane fx:id="gameGridPane" />
+    </center>
+
+    <!-- Botones para controlar la ejecución del juego -->
+    <bottom>
+        <HBox alignment="CENTER_LEFT" spacing="10" BorderPane.alignment="BOTTOM_LEFT">
+            <Button onAction="#playGame" prefHeight="29.0" prefWidth="45.0" text="Jugar" />
+            <Button onAction="#pauseGame" prefHeight="27.0" prefWidth="47.0" text="Pausa" />
+            <Button onAction="#stopGame" prefHeight="26.0" prefWidth="46.0" text="Salir" />
+        </HBox>
+    </bottom>
+
+</BorderPane>
