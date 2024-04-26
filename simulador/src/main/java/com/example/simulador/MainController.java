@@ -1,5 +1,6 @@
 package com.example.simulador;
 
+import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,16 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class MainController {
-
-    @FXML
-    private void handleNewGame() {
-        showAlert("Nuevo juego iniciado");
-        // Lógica para iniciar un nuevo juego
-    }
 
     @FXML
     private void handleLoadGame() {
@@ -45,7 +39,6 @@ public class MainController {
             e.printStackTrace();
         }
     }
-
     @FXML
     private void openGameBoard() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
