@@ -1,4 +1,4 @@
-package com.example.simulador.individuos.identificacion;
+package com.example.simulador.Individuos1;
 public class Individuo {
     private Object data;
     public Individuo() {}

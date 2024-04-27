@@ -1,4 +1,4 @@
-package com.example.simulador.individuos.identificacion;
+package com.example.simulador.Individuos1;
 
 import java.util.Random;
 public class IdentificacionIndividuo{

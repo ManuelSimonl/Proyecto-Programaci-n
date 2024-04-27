@@ -1,5 +1,5 @@
-package com.example.simulador.individuos.identificacion;
-import com.example.simulador.individuos.identificacion.Individuo;
+package com.example.simulador.Individuos1;
+import com.example.simulador.Individuos1.Individuo;
 public class ListaSimple {
         private Individuo[] dato;
         private int maximo;
