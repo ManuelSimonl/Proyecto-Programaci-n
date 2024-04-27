@@ -40,6 +40,7 @@ public class GameBoardController{
     private static Individuo getIndividuo(Button cell){
         return (Individuo) cell.getUserData();
     }
+
     private boolean estaViva(Button cell) {
         if (cell.getStyle().equals("-fx-background-color: #0622f3")) {
             return true;
