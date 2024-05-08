@@ -1,6 +1,5 @@
 package com.example.simulador;
 
-import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 public class MainController {
@@ -39,12 +39,20 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void openGameBoard() throws IOException {
+        int rows = Configuration.getRows();
+        int cols = Configuration.getCols();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
         Parent root = loader.load();
+        GameBoardController gameBoardController = loader.getController();
+        gameBoardController.initializeGameBoard(rows, cols);
+
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
     }
+
 }
