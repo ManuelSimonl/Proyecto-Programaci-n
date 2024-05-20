@@ -1,0 +1,178 @@
+Cambiar tipos de listas en estructura de trabajo, de arrays y list a :
+
+Lista simple:
+
+(ELementoLS) public class ElementoLS{
+                 private Object data;
+                 public ElementoLS(Object data){
+                     this.data=data;}
+                 public Object getData(){
+                     return data;}
+                 public Object setData(Object o){
+                     this.data=o;
+                     return o;}}
+
+(ListaSimple)   package listasimple;
+
+                import listasimple.ElementoLS;
+
+                public class ListaSimple {
+                    private ElementoLS[] datos;
+                    private int maximo;
+                    private int num_elementos;
+                    public ListaSimple(int maximo){
+                        this.maximo=maximo;
+                        this.datos=new ElementoLS[maximo];
+                        this.num_elementos=0;}
+                    public boolean isVacia(){
+                        if (num_elementos==0){
+                            return true;}else{
+                            return false;}}
+                    public void vaciar(){
+                        datos=new ElementoLS[maximo];
+                        num_elementos=0;}
+                    private int add(ElementoLS elemento) {
+                        if (num_elementos < maximo) {
+                            datos[num_elementos] = elemento;
+                            num_elementos += 1;
+                            return num_elementos;
+                        } else {
+                        return -1;}}
+                    public void add(String s){
+                        ElementoLS Ele=new ElementoLS(s);
+                        add(Ele);}
+                    public void add(Object o){
+                        ElementoLS Ele=new ElementoLS(o);
+                        add(Ele);}
+                    public void insert(String s, int posicion){
+                        ElementoLS ele=new ElementoLS(s);
+                        this.datos[posicion]=ele;}
+                    public void insert(Object o, int posicion){
+                        ElementoLS ele=new ElementoLS(o);
+                        this.datos[posicion]=ele;}
+                    public int del(int posicion){
+                        if(posicion>=0 && posicion<num_elementos) {
+                            for(int i=posicion; i<num_elementos-1; i++){
+                                datos[i]=datos[i+1];}
+                            num_elementos--;
+                        }else{
+                            return -1;}
+                        return posicion;}
+                    public int getNum_elementos() {return num_elementos;}
+                    public int getPosicion(ElementoLS el){
+                        for(int i=0; i<num_elementos;i++){
+                            if(datos[i]==el){
+                                return i;}}
+                    return -1;}
+                    public ElementoLS getPrimero(){
+                        if (num_elementos>0){
+                        return datos[0];}
+                        return null;}
+                    public ElementoLS getUltimo(){
+                        if (num_elementos>0){
+                            return datos[num_elementos-1];}
+                        return null;}
+                    private ElementoLS getSiguiente(ElementoLS el){
+                        if (num_elementos>0 && getPosicion(el)<num_elementos-1){
+                            return datos[getPosicion(el)+1];}
+                        return null;
+                        }
+                    public ElementoLS getElemento(int posicion){
+                        if (posicion>=0 && posicion<= num_elementos-1 ){
+                            return datos[posicion];}
+                        return null;}
+                }
+BOTON DE GUARDAR Y CARGAR:
+
+Almacenar el estado del juego
+
+import java.io.Serializable;
+
+public class EstadoJuego implements Serializable {
+       private static final long serialVersionUID = 1L;
+       private int PosicionX;
+       private int PosicionY;
+       private int score;
+
+       // Constructor, getters y setters
+       public EstadoJuego(int PosicionX, int PosicionY, int score){
+           this.PosicionX = PosicionX;
+           this.PosicionY = PosicionY;
+           this.score = score;}
+
+       public int getPosicionX() {
+           return PosicionX;}
+
+       public int getPosicionY() {
+           return PosicionY;}
+
+       public int getScore() {
+           return score;}
+
+       public void setPosicionX(int PosicionX) {
+           this.PosicionX = PosicionX;}
+
+       public void setPosicionY(int PosicionY) {
+           this.PosicionY = PosicionY;
+       }
+
+       public void setScore(int score) {
+           this.score = score;
+       }
+   }
+//Serializar el juego
+
+//saveGame: Serializa un objeto GameState y lo escribe en un archivo.
+  loadGame: Lee un objeto GameState desde un archivo y lo deserializa
+//
+
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.IOException;
+
+public class GameData {
+    public static void saveGame(EstadoJuego gameState, String filename) throws IOException {
+        try (FileOutputStream fileOut = new FileOutputStream(filename);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut)) { // flujo que puede escribir objetos en un OutputStream. Aquí, está conectado a fileOut.
+            out.writeObject(gameState);
+        }}
+
+    public static EstadoJuego loadGame(String filename) throws IOException, ClassNotFoundException {
+        try (FileInputStream fileIn = new FileInputStream(filename);
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {  //FileOutputStream es un flujo de salida de bytes que se conecta a un archivo. Aquí se abre (o crea) el archivo especificado por filename.
+            return (EstadoJuego) in.readObject();
+        }
+    }
+}
+Boton de cargar y guardar:
+
+ Button saveButton = new Button("Guardar Partida");
+        saveButton.setOnAction(e -> {
+            try {
+                GameData.saveGame(EstadoJuego, "EstadoJuego.ser");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        Button loadButton = new Button("Cargar Partida");
+        loadButton.setOnAction(e -> {
+            try {
+                EstadoJuego = GameData.loadGame("EstadoJuego.ser");
+                // Actualiza el juego con el estado cargado
+                updateGameWithLoadedState(EstadoJuego);
+            } catch (IOException | ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        private void updateGameWithLoadedState(GameState gameState) {
+                // Implementa la lógica para actualizar el juego con el estado cargado
+                System.out.println("Posición del jugador: (" + EstadoJuego.getPosicionX() + ", " + EstadoJuego.getPosicionY() + ")");
+                System.out.println("Puntuación: " + EstadoJuego.getScore());}
+
+//"EstadoJuego.ser" es el nombre del archivo donde se guardará o desde donde se cargará el estado del juego
+//.ser es una convención común para indicar que un archivo contiene datos serializados. No es obligatorio usar .ser, pero ayuda a identificar rápidamente el propósito del archivo.
+
