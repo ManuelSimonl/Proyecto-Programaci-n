@@ -26,6 +26,10 @@ public class GameBoardController {
     private int rows;
     private int cols;
 
+    // Método para obtener el GridPane
+    public GridPane getGameGridPane() {
+        return gameGridPane;
+    }
 
     // Variable para controlar el estado de pausa del juego
     private boolean gamePaused = false;
@@ -459,17 +463,6 @@ public class GameBoardController {
         mostrarIndividuos();
     }
 
-    @FXML
-    private void saveGameState() {
-        // Implementa lógica para guardar el estado del juego en archivos
-    }
-
-    @FXML
-    private void loadGameState() {
-        // Implementa lógica para cargar el estado del juego desde archivos
-    }
-
-
 
     // Método para eliminar un individuo de la lista de individuos
     private void eliminarIndividuo(Individuo individuo) {
@@ -602,6 +595,54 @@ public class GameBoardController {
             e.printStackTrace();
         }
     }
+
+    // Variable para almacenar el estado del juego
+    private EstadoJuego estadoJuego;
+
+    // Botones de guardar y cargar partida
+
+    // Método para guardar el estado del juego
+    @FXML
+    private void saveGameState() {
+        try {
+            // Obtener las posiciones actuales del tablero de recursos e individuos
+            int[] recursosPositions = getRecursosPositions(); // Suponiendo que este método devuelve un arreglo de posiciones de recursos
+            int[] individuosPositions = getIndividuosPositions(); // Suponiendo que este método devuelve un arreglo de posiciones de individuos
+
+            // Cambia posX, posY y score según sea necesario
+            int posX = recursosPositions[0]; // Por ejemplo, la posición X del primer recurso
+            int posY = recursosPositions[1]; // Por ejemplo, la posición Y del primer recurso
+            int score = 0; // Supongamos que el puntaje actual es 0
+            int filas = gameGridPane.getRowConstraints().size();
+            int columnas = gameGridPane.getColumnConstraints().size();
+
+            // Crea un nuevo objeto EstadoJuego con los valores proporcionados
+            EstadoJuego estadoJuego = new EstadoJuego(posX, posY, score, filas, columnas);
+
+            // Guarda el estado del juego
+            GameData.saveGame(estadoJuego, "EstadoJuego.ser");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    // Otros métodos y atributos del controlador de juego
+
+    // Métodos para obtener las posiciones actuales del tablero de recursos e individuos
+    private int[] getRecursosPositions() {
+        // Implementa la lógica para obtener las posiciones actuales del tablero de recursos
+        // Por ejemplo:
+        int[] recursosPositions = {10, 20}; // Posiciones X e Y del primer recurso
+        return recursosPositions;
+    }
+
+    private int[] getIndividuosPositions() {
+        // Implementa la lógica para obtener las posiciones actuales del tablero de individuos
+        // Por ejemplo:
+        int[] individuosPositions = {30, 40}; // Posiciones X e Y del primer individuo
+        return individuosPositions;
+    }
+
 
     @FXML
     private Label turnoLabel;

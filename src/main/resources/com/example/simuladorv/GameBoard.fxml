@@ -29,16 +29,13 @@
             <Button text="Play" onAction="#playGame"/>
             <Button text="Pause" onAction="#pauseGame" />
             <Button text="Stop" onAction="#stopGame" />
+            <!-- Botón para acceder a la configuración -->
             <Button fx:id="configuracionButton" text="Configuración" onAction="#openConfigScreen" visible="false" />
+            <!-- Botón para guardar el estado del juego -->
             <Button fx:id="guardarJuegoButton" text="Guardar Juego" onAction="#saveGameState" visible="false" />
             <Label fx:id="turnoLabel" text="Turno: 0"/>
             <Label fx:id="estadoJuegoLabel" text="Estado: Jugando"/>
 
-            <!-- Botón para acceder a la configuración -->
-            <Button fx:id="configuracionButton" text="Configuración" onAction="#openConfigScreen" visible="false" />
-
-            <!-- Botón para guardar el estado del juego -->
-            <Button fx:id="guardarJuegoButton" text="Guardar Juego" onAction="#saveGameState" visible="false" />
 
         </HBox>
     </bottom>
